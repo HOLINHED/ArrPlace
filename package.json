@@ -1,0 +1,26 @@
+{
+  "name": "arrr_place",
+  "version": "1.0.0",
+  "description": "r/place clone",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HOLINHED/ArrPlace.git"
+  },
+  "author": "Dawid Klatkiewicz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HOLINHED/ArrPlace/issues"
+  },
+  "homepage": "https://github.com/HOLINHED/ArrPlace#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "eslint": "^5.7.0"
+  }
+}
