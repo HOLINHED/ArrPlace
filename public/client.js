@@ -1,11 +1,12 @@
 let board = []
 const scl = 25
+const API = 'http://localhost:5000/api'
 
 function setup(){
 	createCanvas(800,400)
     
-	for (let x = 0; x < width / scl; x++){
-		for (let y = 0; y < height / scl; y++){
+	for (let y = 0; y < height / scl; y++){
+		for (let x = 0; x < width / scl; x++){
 			board.push({
 				x,
 				y,
@@ -14,7 +15,7 @@ function setup(){
 
 					const color = hexToRgb(this.color)
         
-					if ((this.x == floor(mouseX / scl)) && (this.y == floor(mouseY / scl))){
+					if (findTile() == board.indexOf(this)){
 						fill(0)
 					}else {
 						fill(color.r, color.g, color.b)
@@ -25,6 +26,8 @@ function setup(){
 			})
 		}
 	}
+    
+	getTiles()
 }
 
 function draw(){
@@ -33,6 +36,10 @@ function draw(){
 	for (tile in board){
 		board[tile].draw()
 	}
+}
+
+function mousePressed(){
+	alert(findTile())
 }
 
 function hexToRgb(hex) {
@@ -45,9 +52,20 @@ function hexToRgb(hex) {
 }
 
 function getTiles(){
-	//TODO: make this get data from the api
-	const tiles = {
-		board: []
+	fetch(API)
+		.then(function(response) {
+			return response.json()
+		})
+		.then(function(data) {
+			console.table(data)
+		})
+}
+
+function findTile(){
+	for (tile in board){
+		if ((board[tile].x == floor(mouseX / scl)) && (board[tile].y == floor(mouseY / scl))){
+			return tile
+		}
 	}
-	return tiles
+	return -1
 }
