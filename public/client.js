@@ -7,22 +7,32 @@ function setup(){
 	for (let x = 0; x < width / scl; x++){
 		for (let y = 0; y < height / scl; y++){
 			board.push({
-				x: x * scl,
-				y: y * scl,
-				color: '#ffffff'  
+				x,
+				y,
+				color: '#ffffff',
+				draw() {
+
+					const color = hexToRgb(this.color)
+        
+					if ((this.x == floor(mouseX / scl)) && (this.y == floor(mouseY / scl))){
+						fill(0)
+					}else {
+						fill(color.r, color.g, color.b)
+					}
+
+					rect(this.x * scl, this.y * scl, scl, scl)
+				}
 			})
 		}
 	}
 }
 
 function draw(){
-    background(0)
+	background(0)
     
 	for (tile in board){
-        const color = hexToRgb(board[tile].color);
-        fill(color.r,color.g,color.b)
-        rect(board[tile].x, board[tile].y, scl)
-    }
+		board[tile].draw()
+	}
 }
 
 function hexToRgb(hex) {
@@ -35,7 +45,7 @@ function hexToRgb(hex) {
 }
 
 function getTiles(){
-    //TODO: make this get data from the api
+	//TODO: make this get data from the api
 	const tiles = {
 		board: []
 	}
