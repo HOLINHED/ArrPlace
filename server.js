@@ -1,4 +1,7 @@
 const express = require('express')
+const fs = require('fs')
+
+let board = JSON.parse(fs.readFileSync('data.json'))
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -7,25 +10,26 @@ app.use(express.json())
 
 app.use(express.static('public'))
 
-//TODO: testing purposes
-let DBtest = []
-for (let i = 0; i < 512; i++) DBtest.push('#ffffff')
-
 app.get('/api', (req, res) => {
-    res.status(200)
+	res.status(200)
 
 	res.json({
-		board: DBtest
+		board: board.board
 	})
 })
 
-//TODO: also give this real data
 app.post('/api', (req, res) => {
-    res.status(200)
+	res.status(200)
     
-    DBtest[req.body.tile] = fixHex(req.body.color)
+	board.board[req.body.tile] = fixHex(req.body.color)
 
-    res.json({board: DBtest})
+	res.json({
+		board: board.board
+	})
+
+	fs.writeFile('data.json', JSON.stringify(board), (err) => {
+		err ? console.log(err) : null
+	})
 })
 
 app.listen(PORT, () => {
@@ -37,9 +41,9 @@ function fixHex(hex){
     
 	let newString = hex.trim().replace(/[^a-fA-F0-9]/g, '').toLowerCase()
 
-    if (!newString.startsWith('#')) newString = '#' + newString
+	if (!newString.startsWith('#')) newString = '#' + newString
     
-    if (newString.length > 7) newString = newString.substring(0, 8)
+	if (newString.length > 7) newString = newString.substring(0, 8)
 
 	if (newString.length == 2) for (let i = 0; i < 5; i++) newString += newString.charAt(1)
 

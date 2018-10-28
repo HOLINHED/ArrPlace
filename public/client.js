@@ -37,20 +37,20 @@ function draw(){
 }
 
 function mousePressed(){
-    let tile = findTile()
-    tile != -1 ? 
-	fetch(API, {
-		method: 'POST',
-		body: JSON.stringify({ tile, color: userColor }),
-		headers: {
-			'content-type' : 'application/json'
-		}
-	})
-	.then(response => response.json())
-	.catch(error => console.error('Error:', error))
-	.then(response => {
-		for (tile in board) board[tile].color = response.board[tile]
-	}) : null
+	let tile = findTile()
+	tile != -1 ? 
+		fetch(API, {
+			method: 'POST',
+			body: JSON.stringify({ tile, color: userColor }),
+			headers: {
+				'content-type' : 'application/json'
+			}
+		})
+			.then(response => response.json())
+			.catch(error => console.error('Error:', error))
+			.then(response => {
+				for (tile in board) board[tile].color = response.board[tile]
+			}) : null
 }
 
 document.querySelector('#submit').onclick = function() { 
