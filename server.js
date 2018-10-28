@@ -7,27 +7,25 @@ app.use(express.json())
 
 app.use(express.static('public'))
 
-//TODO: placeholder
+//TODO: testing purposes
 let DBtest = []
-for (let i = 0; i < 512; i++) i < 200 ? DBtest.push('#ffffff') : DBtest.push('#00ffff')
+for (let i = 0; i < 512; i++) DBtest.push('#ffffff')
 
 app.get('/api', (req, res) => {
-	res.status(200)
-	//TODO: give this real data
+    res.status(200)
+
 	res.json({
-		DBtest
+		board: DBtest
 	})
 })
 
 //TODO: also give this real data
 app.post('/api', (req, res) => {
-	res.status(200)
+    res.status(200)
     
-	DBtest[req.body.tile] = fixHex(req.body.color)
+    DBtest[req.body.tile] = fixHex(req.body.color)
 
-	res.json({
-		DBtest
-	})
+    res.json({board: DBtest})
 })
 
 app.listen(PORT, () => {
@@ -39,7 +37,9 @@ function fixHex(hex){
     
 	let newString = hex.trim().replace(/[^a-fA-F0-9]/g, '').toLowerCase()
 
-	if (!newString.startsWith('#')) newString = '#' + newString
+    if (!newString.startsWith('#')) newString = '#' + newString
+    
+    if (newString.length > 7) newString = newString.substring(0, 8)
 
 	if (newString.length == 2) for (let i = 0; i < 5; i++) newString += newString.charAt(1)
 
@@ -50,8 +50,6 @@ function fixHex(hex){
 	if (newString.length == 5) newString += newString.substring(1, 3)
 
 	if (newString.length == 6) newString += newString.charAt(5)
-
-	if (newString.length > 7) newString = newString.substring(0, 8)
 
 	return newString
 }
