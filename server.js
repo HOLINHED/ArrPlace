@@ -38,37 +38,37 @@ app.listen(PORT, () => {
 
 function fixHex(string) {
 
-    string = string.trim().replace(/[^a-fA-F0-9]/g, '').toLowerCase()
+	string = string.trim().replace(/[^a-fA-F0-9]/g, '').toLowerCase()
 
-    if (string.length <= 0) return '#000000';
+	if (string.length <= 0) return '#000000'
 
-    if (string.length >= 7) return '#' + string.substring(0,6)
+	if (string.length >= 7) return '#' + string.substring(0,6)
 
-    if (string.length <= 2 && string.length > 0){
+	if (string.length <= 2){
 
-        let newString = '';
+		let newString = ''
         
-        const addAmount = 6 / string.length;
+		const addAmount = 6 / string.length
 
-        for (let i = 0; i < addAmount; i++) newString += string;
+		for (let i = 0; i < addAmount; i++) newString += string
 
-        return '#' + newString;
-    } 
+		return '#' + newString
+	} 
     
-    const remainder = string.length % 3;
-    const divisor = Math.floor(string.length / 3);
+	const remainder = string.length % 3
+	const divisor = Math.floor(string.length / 3)
     
-    const sep1 = remainder === 2 || remainder === 1 ? 1 : 0;
-    const sep2 = remainder === 1 || remainder === 0 ? 0 : 1;
+	const sep1 = remainder === 2 || remainder === 1 ? 1 : 0
+	const sep2 = remainder === 1 || remainder === 0 ? 0 : 1
     
-    const string1 = string.slice(0, divisor + sep1);
-    const string2 = string.slice(divisor + sep1, (divisor * 2) + sep1 + sep2);
-    const string3 = string.slice((divisor * 2) + sep1 + sep2);
+	const string1 = string.slice(0, divisor + sep1)
+	const string2 = string.slice(divisor + sep1, (divisor * 2) + sep1 + sep2)
+	const string3 = string.slice((divisor * 2) + sep1 + sep2)
 
-    return '#' + hexFormat(string1) + hexFormat(string2) + hexFormat(string3)
+	return '#' + hexFormat(string1) + hexFormat(string2) + hexFormat(string3)
 }
 
 function hexFormat(hex) {
-    if (hex.length === 1) return hex + hex
-    return hex
+	if (hex.length === 1) return hex + hex
+	return hex
 }

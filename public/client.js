@@ -14,8 +14,7 @@ function setup(){
 				y,
 				color: '#ffffff',
 				draw() {
-					const color = hexToRgb(this.color)
-					fill(color.r,color.g,color.b)
+					fill(this.color)
 
 					stroke(invertColor(this.color))
 
@@ -26,7 +25,6 @@ function setup(){
 			})
 		}
 	}
-    
 	getTiles()
 }
 
@@ -95,13 +93,4 @@ function padZero(str, len) {
 	len = len || 2
 	var zeros = new Array(len).join('0')
 	return (zeros + str).slice(-len)
-}
-
-function hexToRgb(hex) {
-	var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-	return result ? {
-		r: parseInt(result[1], 16),
-		g: parseInt(result[2], 16),
-		b: parseInt(result[3], 16)
-	} : null
 }
