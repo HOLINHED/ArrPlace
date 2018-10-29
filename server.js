@@ -36,24 +36,39 @@ app.listen(PORT, () => {
 	console.log(`server started on ${PORT}`)
 })
 
-//TODO: make this function nice
-function fixHex(hex){
+function fixHex(string) {
+
+    string = string.trim().replace(/[^a-fA-F0-9]/g, '').toLowerCase()
+
+    if (string.length <= 0) return '#000000';
+
+    if (string.length >= 7) return '#' + string.substring(0,6)
+
+    if (string.length <= 2 && string.length > 0){
+
+        let newString = '';
+        
+        const addAmount = 6 / string.length;
+
+        for (let i = 0; i < addAmount; i++) newString += string;
+
+        return '#' + newString;
+    } 
     
-	let newString = hex.trim().replace(/[^a-fA-F0-9]/g, '').toLowerCase()
-
-	if (!newString.startsWith('#')) newString = '#' + newString
+    const remainder = string.length % 3;
+    const divisor = Math.floor(string.length / 3);
     
-	if (newString.length > 7) newString = newString.substring(0, 8)
+    const sep1 = remainder === 2 || remainder === 1 ? 1 : 0;
+    const sep2 = remainder === 1 || remainder === 0 ? 0 : 1;
+    
+    const string1 = string.slice(0, divisor + sep1);
+    const string2 = string.slice(divisor + sep1, (divisor * 2) + sep1 + sep2);
+    const string3 = string.slice((divisor * 2) + sep1 + sep2);
 
-	if (newString.length == 2) for (let i = 0; i < 5; i++) newString += newString.charAt(1)
+    return '#' + hexFormat(string1) + hexFormat(string2) + hexFormat(string3)
+}
 
-	if (newString.length == 3) for (let i = 0; i < 2; i++) newString += newString.substring(1, 3)
-
-	if (newString.length == 4) newString += newString.substring(1, 4)
-
-	if (newString.length == 5) newString += newString.substring(1, 3)
-
-	if (newString.length == 6) newString += newString.charAt(5)
-
-	return newString
+function hexFormat(hex) {
+    if (hex.length === 1) return hex + hex
+    return hex
 }
