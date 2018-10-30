@@ -14,7 +14,7 @@ Request: {
 
 Response: {newBoard}
 
-A post request to the api should contain an object of the index of the tile you would like to change,
+A post request to the api should contain an object with the index of the tile you would like to change,
 and the color you would like to change it to. Before the new color is inserted into the array,
 it runs through a format function that always returns a # + 6 hexadecimal value in lowercase.
 
