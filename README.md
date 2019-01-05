@@ -2,46 +2,21 @@
 
 A r/place clone built using nodejs.
 
+NO LIVE VERSION
 
-API Doc -
+TODO:
 
--> POST /api
+    1) Add error handling.
+    2) Send board information to database instead of a JSON file.
 
-Request: {
-  index,
-  color
-}
+/api (get)
 
-Response: {newBoard}
+    responses:
+      200:
+        board: (array) Array containing the color of each pixel.
+        
+/api (post)
 
-A post request to the api should contain an object with the index of the tile you would like to change,
-and the color you would like to change it to. Before the new color is inserted into the array,
-it runs through a format function that always returns a # + 6 hexadecimal value in lowercase.
-
-INPUT: 'a'
-OUTPUT: '#aaaaaa'
-
-INPUT: '#fff'
-OUTPUT: '#ffffff'
-
-INPUT: 'howdy'
-OUTPUT: '#dddddd'
-
--> GET /api
-
-Response: {newBoard}
-
-A get request to the api will return an object with the board array (Length 512). This array contains the colors of all
-pixels of a 512 pixel board. Index 0 being the first pixel of the board, and index 511 being the last pixel of the board.
-
-{
-'#ffffff',
-'#ffffff',
-...
-}
-
--> GET /
-
-Response: Public Directory
-
-This returns the public directory, which contains the premade client to interact with the API.
+    responses:
+      200:
+        board: (array) Array containing the updated board.
